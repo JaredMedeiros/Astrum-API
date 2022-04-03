@@ -4,23 +4,23 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel')
 
 //register new user //get request
-const registerUser =  async(req, res) => {
+const registerUser =  asyncHandler(async (req, res) => {
     const { username, email, password} = req.body
 
     if(!username || !email || !password) {
-        res.status(400).send('Please add all fields')
-        // throw new Error('Please add all fields')
+        res.status(400)
+        throw new Error('Please add all fields')
     }
-    try {
+  
     const userExists = await User.findOne({email})
 
     if(userExists) {
-        res.status(400).send('User already exists')
-        // throw new Error('User already exists');
+        res.status(400)
+        throw new Error('User already exists');
     }
 
-    const salt = bcrypt.genSaltSync(10)
-    const hashedPassword = bcrypt.hashSync(password, salt)
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(password, salt)
 
     const user = await User.create({
         username,
@@ -32,16 +32,15 @@ const registerUser =  async(req, res) => {
     if(user) {
         res.status(201).json({
             _id: user.id,
-            username: user.name,
+            username: user.username,
             email: user.email,
             token: generateToken(user._id)
-        })
-    } 
-} catch(e) {
-    res.status(400).send('Invalid user data')
-        // throw new Error('Invalid user data')
-}
-}
+        }) 
+    } else {
+    res.status(400)
+        throw new Error('Invalid user data')
+    }
+})
 
 //authenticate a user // post request
 const loginUser = asyncHandler(async (req, res) => {
@@ -52,7 +51,7 @@ const loginUser = asyncHandler(async (req, res) => {
     if(user && (await bcrypt.compare(password, user.password))) {
         res.json({
             _id: user.id,
-            username: user.name,
+            username: user.username,
             email: user.email,
             token: generateToken(user._id)
         })

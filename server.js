@@ -1,3 +1,4 @@
+const project = require('./routes/projectRoutes')
 const express = require('express');
 const dotenv = require("dotenv").config();
 const { errorHandler } = require('./middleware/errorMiddleware')
@@ -13,7 +14,8 @@ app.use(express.urlencoded({extended: false}))
 app.use(cors());
 
 app.use('/user', require('./routes/userRoutes'))
+app.use('/projects', project)
 
 app.use(errorHandler)
 
-app.listen(port, () => console.log(`Server started on port ${port}`))
+app.listen(port, () => console.log(`Server started on port ${port}`)) 
