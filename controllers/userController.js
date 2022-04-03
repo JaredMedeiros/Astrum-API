@@ -71,8 +71,22 @@ const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '30d'})
 }
 
+const findAll = (req, res) => {
+    User.find({})
+        .then(users => res.json(users))
+        .catch(err => res.json(err));
+}
+
+const findById = (req,res) => {
+    User.findOne({_id: req.params.id})
+        .then(user => res.json(user))
+        .catch(err => res.json(err));
+}
+
 module.exports = {
     registerUser,
     loginUser,
-    getMine
+    getMine,
+    findAll,
+    findById,
 }
