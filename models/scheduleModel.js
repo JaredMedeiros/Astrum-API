@@ -1,25 +1,25 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+// const mongoose = require('mongoose');
+// const Schema = mongoose.Schema;
 
-const scheduleSchema = new mongoose.Schema({
+// const scheduleSchema = new mongoose.Schema({
 
-    projectsSchedule: [
-        {
-            checkpointTitle: {
-            type: String,
-            },
+//     projectsSchedule: [
+//         {
+//             checkpointTitle: {
+//             type: String,
+//             },
 
-            dueDate: {
-            type: String,
-            },
-        },
-    ],
+//             dueDate: {
+//             type: String,
+//             },
+//         },
+//     ],
 
-    project: {
-        type: Schema.Types.ObjectId,
-        ref: 'Project',
-        required: true
-    },
-});
+//     project: {
+//         type: Schema.Types.ObjectId,
+//         ref: 'Project',
+//         required: true
+//     },
+// });
 
-module.exports = mongoose.model('Schedule', scheduleSchema);
+// module.exports = mongoose.model('Schedule', scheduleSchema);

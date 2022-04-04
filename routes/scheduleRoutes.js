@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getSchedules, setSchedule } =require('../controllers/scheduleController');
+const { getSchedule, setCheckpoint } =require('../controllers/scheduleController');
 const { protect } = require('../middleware/authMiddleware')
 
-router.get("/", getSchedules);
-router.post("/", setSchedule);
+router.get("/", protect, getSchedule);
+router.post("/", protect, setCheckpoint);
 
 module.exports = router;
