@@ -24,6 +24,7 @@ const setTask = asyncHandler(async (req, res) => {
         taskDescription: req.body.taskDescription,
         project: req.project.id,
     })   
+    res.status(200).json(task)
 });
 
 module.exports = {
