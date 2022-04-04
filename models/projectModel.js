@@ -13,6 +13,41 @@ const projectSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+
+    tasks: [
+        {
+            taskName:{
+                type: String,
+            },
+        
+            taskDescription: {
+                type: String,
+            },
+        
+            assignedTo: {
+                type: String,
+            },
+        
+            status: {
+                type: String,
+            },
+        },
+    ],
+
+
+    checkpointList: [
+            
+        {
+            checkpointTitle: {
+                type: String,
+            },
+        
+            dueDate: {
+                type: String,
+            },
+            
+        },
+    ],  
 },
 {timestamps:true});
 
