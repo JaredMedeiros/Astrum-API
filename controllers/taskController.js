@@ -1,11 +1,12 @@
 const asyncHandler = require('express-async-handler');
-const Task = require('../models/taskModel');
+const Project = require('../models/projectModel');
 
 
 const getTasks = asyncHandler(async (req,res) => {
-    const tasks = await Task.find({project: req.project.id})
+    const task = await Project.find({user: req.user.id, _id: req.id}, 'tasks')
+    res.status(200)
+    res.json(task)
 
-    res.status(200).json(tasks)
 })
 
 const findById = (req,res) => {
@@ -15,15 +16,18 @@ const findById = (req,res) => {
 }
 
 const setTask = asyncHandler(async (req, res) => {
-    if(!req.body.taskName || !req.body.taskDescription) {
+    if(!req.body.tasks.taskName || !req.body.tasks.taskDescription) {
         res.status(400).send('Please add valid task')
     }
 
-    const task = await Task.create({
-        taskName: req.body.taskName,
-        taskDescription: req.body.taskDescription,
-        project: req.project.id,
-    })   
+    const task = await Project.findOneAndUpdate(
+        {_id: req.id},
+        {$set:
+        {"tasks.$.taskName": req.body.tasks.taskName,
+        "tasks.$.taskDescription": req.body.tasks.taskDescription
+        }}
+        
+    )   
     res.status(200).json(task)
 });
 
