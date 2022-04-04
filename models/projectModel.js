@@ -14,6 +14,18 @@ const projectSchema = new mongoose.Schema({
         required: true
     },
 
+    team: [
+        {
+            teammateName: {
+                type: String,
+            },
+
+            teammateEmail: {
+                type:String,
+            },
+        },
+    ],
+
     tasks: [
         {
             taskName:{

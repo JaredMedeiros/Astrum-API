@@ -15,6 +15,8 @@ const setProject = asyncHandler(async (req, res) => {
     const project = await Project.create({
         projectName: req.body.projectName,
         user: req.user.id,
+        team: {teammateName: req.body.teammateName, 
+                teammateEmail: req.body.teammateEmail},
     })
 
     res.status(200).json(project)
