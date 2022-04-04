@@ -63,7 +63,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 //private access 
 const getMine = asyncHandler (async (req, res) => {
-    res.json({message: 'user data display'})
+    res.status(200).json(req.user)
 })
 
 //Generate JWT
@@ -77,16 +77,9 @@ const findAll = (req, res) => {
         .catch(err => res.json(err));
 }
 
-const findById = (req,res) => {
-    User.findOne({_id: req.params.id})
-        .then(user => res.json(user))
-        .catch(err => res.json(err));
-}
-
 module.exports = {
     registerUser,
     loginUser,
     getMine,
     findAll,
-    findById,
 }

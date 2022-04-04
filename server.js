@@ -14,6 +14,8 @@ app.use(cors());
 
 app.use('/users', require('./routes/userRoutes'))
 app.use('/projects', require('./routes/projectRoutes'))
+app.use('/tasks', require('./routes/taskRoutes'))
+app.use('/schedules', require('./routes/scheduleRoutes'))
 
 app.use(errorHandler)
 
