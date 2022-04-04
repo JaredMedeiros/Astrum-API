@@ -3,7 +3,7 @@ const router = express.Router();
 const { getProjects, setProject } =require('../controllers/projectController');
 const { protect } = require('../middleware/authMiddleware')
 
-router.get("/", protect, getProjects);
-router.post("/", protect, setProject);
+router.get("/", getProjects);
+router.post("/", setProject);
 
 module.exports = router;
