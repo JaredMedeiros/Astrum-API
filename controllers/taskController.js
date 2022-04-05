@@ -21,11 +21,11 @@ const setTask = asyncHandler(async (req, res) => {
     }
 
     Project.findByIdAndUpdate((req.params.id),
-    {tasks: {
+    {$push: {tasks: {
         taskName: req.body.taskName,
         taskDescription: req.body.taskDescription,
         status: req.body.status}
-    }, 
+    }}, 
     
     {upsert: true, new: true},
     
