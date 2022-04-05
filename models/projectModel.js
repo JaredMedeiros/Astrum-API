@@ -40,9 +40,9 @@ const projectSchema = new mongoose.Schema({
                 type: String,
             },
         
-            status: {
-                type: String,
-            },
+            // status: {
+            //     type: String,
+            // },
         },
     ],
 

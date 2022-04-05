@@ -20,15 +20,21 @@ const setTask = asyncHandler(async (req, res) => {
         res.status(400).send('Please add valid task')
     }
 
-    const task = await Project.findOneAndUpdate(
-        {user: req.user.id},
-        {tasks: {taskName : req.body.taskName, taskDescription: req.body.taskDescription}
-        },
-        {upsert: true, new: true}
-        
-    )   
-    res.status(200).json(task)
+    Project.findByIdAndUpdate((req.params.id),
+    {tasks: {
+        taskName: req.body.taskName,
+        taskDescription: req.body.taskDescription,
+        status: req.body.status}
+    }, 
+    
+    {upsert: true, new: true},
+    
+        function(err, doc) {
+        if(err) return res.send(err);
+        return res.send(doc)
+    });
 });
+
 
 module.exports = {
     getTasks,

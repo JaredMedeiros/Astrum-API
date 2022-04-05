@@ -5,6 +5,6 @@ const { protect } = require('../middleware/authMiddleware')
 
 router.get("/", getTasks);
 // router.get("/:id", protect, findById)
-router.post("/", setTask);
+router.post("/:id", setTask);
 
 module.exports = router;
