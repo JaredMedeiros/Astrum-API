@@ -10,9 +10,11 @@ const getTasks = asyncHandler(async (req,res) => {
 })
 
 // const getOneTask = (req,res) => {
-//     Project.findOne({taskName req.params.id})
-//         .then(user => res.json(user))
-//         .catch(err => res.json(err));
+//     Project.findByID((req.params.id.id), function (err, doc) {
+//         if(err) return res.send(err);
+//         return res.send(doc)
+//     });    
+        
 // }
 
 const setTask = asyncHandler(async (req, res) => {
@@ -24,7 +26,7 @@ const setTask = asyncHandler(async (req, res) => {
     {$push: {tasks: {
         taskName: req.body.taskName,
         taskDescription: req.body.taskDescription,
-        status: req.body.status}
+        assignedTo: req.body.assignedTo}
     }}, 
     
     {upsert: true, new: true},
@@ -34,6 +36,8 @@ const setTask = asyncHandler(async (req, res) => {
         return res.send(doc)
     });
 });
+
+
 
 
 module.exports = {

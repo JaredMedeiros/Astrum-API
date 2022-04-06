@@ -16,18 +16,23 @@ const getSchedule = asyncHandler(async (req,res) => {
 // }
 
 const setCheckpoint = asyncHandler(async (req, res) => {
-    // if(!req.body.taskName || !req.body.taskDescription) {
-    //     res.status(400).send('Please add valid task')
-    // }
+    if(!req.body.checkpointTitle || !req.body.dueDate) {
+        res.status(400).send('Please add valid checkpoint')
+    }
 
-    const schedule = await Project.findOneAndUpdate(
-        {user: req.user.id},
-        {checkpointList: {checkpointTitle : req.body.checkpointTitle, dueDate: req.body.dueDate}
-        },
-        {upsert: true, new: true}
-        
-    )   
-    res.status(200).json(schedule)
+    Project.findByIdAndUpdate((req.params.id),
+    {$push: {checkpointList: {
+        checkpointTitle: req.body.checkpointTitle,
+        dueDate: req.body.dueDate,
+        }
+    }}, 
+    
+    {upsert: true, new: true},
+    
+        function(err, doc) {
+        if(err) return res.send(err);
+        return res.send(doc)
+    });
 });
 
 module.exports = {
